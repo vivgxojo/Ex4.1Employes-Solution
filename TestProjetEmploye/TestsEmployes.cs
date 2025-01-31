@@ -4,7 +4,8 @@ namespace TestProjetEmploye
 {
     public class TestsEmployes
     {
-        private Employe employe = new Employe("1234567", "Dupont", "Jean", new DateTime(1980, 5, 15), 50000.50, new DateTime(2005, 6, 1));
+        // Arrange
+        private Employe employe = new Employe("1234567", "Dupont", "Jean", new DateTime(2000, 5, 15), 50000.50, new DateTime(2005, 6, 1));
 
         [Fact]
         public void TestAge()
@@ -13,7 +14,7 @@ namespace TestProjetEmploye
             int age = employe.Age();
 
             // Assert
-            Assert.Equal(DateTime.Now.Year - 1980 - (DateTime.Now.DayOfYear < new DateTime(1980, 5, 15).DayOfYear ? 1 : 0), age);
+            Assert.Equal(24, age);
         }
 
         [Fact]
@@ -33,7 +34,7 @@ namespace TestProjetEmploye
             bool droit = employe.DroitStationnement();
 
             // Assert
-            Assert.True(droit);
+            Assert.False(droit);
         }
 
         [Fact]
@@ -67,6 +68,23 @@ namespace TestProjetEmploye
         }
 
         [Fact]
+        public void TestPrenomVide()
+        {
+            string message = "";
+            // Act
+            try
+            {
+                employe.Prenom = "";
+            }
+            catch (Exception ex)
+            {
+                message = ex.Message;
+            }
+            // Assert
+            Assert.Equal(message, "Le prénom ne peut pas être vide.");
+        }
+
+        [Fact]
         public void TestSalaireAnnuel()
         {
             // Act
@@ -74,6 +92,16 @@ namespace TestProjetEmploye
 
             // Assert
             Assert.Equal(60000.75, employe.SalaireAnnuel);
+        }
+
+        [Fact]
+        public void DateNaissance()
+        {
+            // Act
+            employe.DateNaissance = new DateTime(2001, 5, 15);
+
+            // Assert
+            Assert.Equal(employe.DateNaissance, new DateTime(2001, 5, 15));
         }
 
     }

@@ -20,10 +20,10 @@ namespace Ex4._1Employes_Solution
             get { return matricule; }
             set
             {
-                if (value.Length == 7 && int.TryParse(value, out _))
+                if (value.Length == 7 && int.TryParse(value, out int sortie))
                     matricule = value;
                 else
-                    throw new ArgumentException("Le matricule doit être composé de sept chiffres.");
+                    throw new FormatException("Le matricule doit être composé de sept chiffres.");
             }
         }
 
@@ -31,7 +31,7 @@ namespace Ex4._1Employes_Solution
         {
             get { return nom; }
             set
-            {
+            {           // (condition) ? if : else
                 nom = !string.IsNullOrWhiteSpace(value) ? value : throw new ArgumentException("Le nom ne peut pas être vide.");
             }
         }
@@ -80,6 +80,8 @@ namespace Ex4._1Employes_Solution
 
         public Employe(string matricule, string nom, string prenom, DateTime dateNaissance, double salaireAnnuel, DateTime dateEntree)
         {
+            //Passer par les propriétés pour déclencher la validation des setters
+            //Laisser se propager les exceptions jusqu'au programme principal
             Matricule = matricule;
             Nom = nom;
             Prenom = prenom;
